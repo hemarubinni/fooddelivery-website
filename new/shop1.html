@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Shop - Order Food</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg?w=2000');
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #5e0951;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .food-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 10px;
+            width: calc(15% - 20px); /* 5 items per row */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .food-image {
+            max-width: 100%;
+            height: 100px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .cart {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        ul#cart-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul#cart-items li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>WELCOME TO INNIPS AND KAARAMS</h1>
+    </header>
+    <div class="container">
+        <!-- Food Items -->
+        <div class="food-item">
+            <img class="food-image" src="https://upload.wikimedia.org/wikipedia/commons/9/91/Pizza-3007395.jpg" alt="Food 1">
+            <h2>Pizza</h2>
+            <p>Price: $8.99</p>
+            <button onclick="addToCart('Pizza', 8.99)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDhJF0gE9nAMfTKaF4GCS9ToDHxW_GtwPDk_nQw07PI6MCMXN1U9pk2C1stEv2EvkyGM8&usqp=CAU" alt="Food 2">
+            <h2>Burger</h2>
+            <p>Price: $6.49</p>
+            <button onclick="addToCart('Burger', 6.49)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="12.jpg" alt="Food 3">
+            <h2>Sushi</h2>
+            <p>Price: $12.99</p>
+            <button onclick="addToCart('Sushi', 12.99)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="3.jpg" alt="Food 4">
+            <h2>Salad</h2>
+            <p>Price: $5.99</p>
+            <button onclick="addToCart('Salad', 5.99)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="download.jpg" alt="Food 5">
+            <h2>Steak</h2>
+            <p>Price: $15.99</p>
+            <button onclick="addToCart('Steak', 15.99)">Add to Cart</button>
+        </div>
+    </div>
+    <div class="cart">
+        <h2>Cart</h2>
+        <ul id="cart-items">
+            <!-- Cart items will be displayed here -->
+        </ul>
+        <p>Total: $<span id="total-amount">0.00</span></p>
+        <button onclick="placeOrder()">Place Order</button>
+        <p id="order-status"></p>
+    </div>
+
+    <script>
+        let cart = [];
+        let totalAmount = 0;
+
+        function addToCart(itemName, itemPrice) {
+            cart.push({ name: itemName, price: itemPrice });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const totalAmountDisplay = document.getElementById('total-amount');
+
+            // Clear existing cart items
+            cartItems.innerHTML = '';
+
+            // Calculate total amount
+            totalAmount = 0;
+
+            cart.forEach(item => {
+                totalAmount += item.price;
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                cartItems.appendChild(listItem);
+            });
+
+            totalAmountDisplay.textContent = totalAmount.toFixed(2);
+        }
+
+        function placeOrder() {
+            // You can add your order placement logic here.
+            // For demonstration, let's just display a message and the total amount.
+            const orderStatus = document.getElementById('order-status');
+            orderStatus.textContent = 'Your order has been placed successfully!';
+            orderStatus.textContent = 'Thank You Have a Nice Day!';
+
+            orderStatus.style.color = 'green';
+            orderStatus.style.fontWeight = 'bold';
+
+            const totalAmountMessage = document.createElement('p');
+            totalAmountMessage.textContent = `Total Amount: $${totalAmount.toFixed(2)}`;
+            orderStatus.appendChild(totalAmountMessage);
+
+            // Clear the cart and total amount display after placing the order
+            cart = [];
+            updateCart();
+        }
+    </script>
+</body>
+</html>

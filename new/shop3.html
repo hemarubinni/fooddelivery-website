@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELCOME TO DELIFRESH</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('https://i.pinimg.com/1200x/09/b4/87/09b487356fe92346b9c6faf45a676be2.jpg');
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .food-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 10px;
+            width: calc(15% - 20px); /* 5 items per row */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .food-image {
+            max-width: 100%;
+            height: 100px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .cart {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        ul#cart-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul#cart-items li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>WELCOME TO DELIFRESH</h1>
+    </header>
+    <div class="container">
+        <!-- Food Items for Shop 3 -->
+        <div class="food-item">
+            <img class="food-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRr8iUHawBLaPps7pCfU-it-K8VpVQFGjELsA&usqp=CAU" alt="Food 11">
+            <h2>Burrito</h2>
+            <p>Price: $9.49</p>
+            <button onclick="addToCart('Burrito', 9.49)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBWGpK2qoLXVlPw1KXQ8gsWKv4cc-FlDblbQ&usqp=CAU" alt="Food 12">
+            <h2>pani puri</h2>
+            <p>Price: $3.99</p>
+            <button onclick="addToCart('pani puri', 3.99)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnRjcLNsV2nrCjCBWAkfV9gJamnxO8ySf_Yw&usqp=CAU" alt="Food 13">
+            <h2>Fried Chicken</h2>
+            <p>Price: $11.99</p>
+            <button onclick="addToCart('Fried Chicken', 11.99)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWCI5UoAy473xbH9guhSfZwB35qsrNqd7PMQ&usqp=CAU" alt="Food 14">
+            <h2>Pancakes</h2>
+            <p>Price: $6.99</p>
+            <button onclick="addToCart('Pancakes', 6.99)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiIEErt7SgAP5CdQ4qHRGroLCRtg-6OAzpeg&usqp=CAU" alt="Food 15">
+            <h2>Milkshake</h2>
+            <p>Price: $4.49</p>
+            <button onclick="addToCart('Milkshake', 4.49)">Add to Cart</button>
+        </div>
+    </div>
+    <div class="cart">
+        <h2>Cart</h2>
+        <ul id="cart-items">
+            <!-- Cart items will be displayed here -->
+        </ul>
+        <p>Total: $<span id="total-amount">0.00</span></p>
+        <button onclick="placeOrder()">Place Order</button>
+        <p id="order-status"></p>
+    </div>
+
+    <script>
+        let cart = [];
+        let totalAmount = 0;
+
+        function addToCart(itemName, itemPrice) {
+            cart.push({ name: itemName, price: itemPrice });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const totalAmountDisplay = document.getElementById('total-amount');
+
+            // Clear existing cart items
+            cartItems.innerHTML = '';
+
+            // Calculate total amount
+            totalAmount = 0;
+
+            cart.forEach(item => {
+                totalAmount += item.price;
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                cartItems.appendChild(listItem);
+            });
+
+            totalAmountDisplay.textContent = totalAmount.toFixed(2);
+        }
+
+        function placeOrder() {
+            // You can add your order placement logic here.
+            // For demonstration, let's just display a message and the total amount.
+            const orderStatus = document.getElementById('order-status');
+            orderStatus.textContent = 'Thank You For Shopping!!';
+            orderStatus.style.color = 'green';
+            const totalAmountMessage = document.createElement('p');
+            totalAmountMessage.textContent = `Total Amount: $${totalAmount.toFixed(2)}`;
+            orderStatus.appendChild(totalAmountMessage);
+            cart = []; // Clear the cart
+            updateCart(); // Update the cart display
+        }
+    </script>
+</body>
+</html>

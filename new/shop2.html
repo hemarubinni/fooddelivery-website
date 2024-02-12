@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WELCOME TO FOOD SNEAKERS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvau06oTeITbq_0PPOXwCZOtbqqpm68oQca4QHi4yqhU79JwyHVGpBvbFB9Y1tn_hEJGA&usqp=CAU');
+            background-size: cover;
+        }
+
+        header {
+            background-color: violet;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .food-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 10px;
+            width: calc(16% - 20px); /* 5 items per row */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .food-image {
+            max-width: 100%;
+            height: 100px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 10px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .cart {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        ul#cart-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul#cart-items li {
+            margin-bottom: 10px;
+        }
+
+        #order-status {
+            font-weight: bold;
+            margin-top: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>WELCOME TO FOOD SNEAKERS</h1>
+    </header>
+    <div class="container">
+        <!-- Food Items for Shop 2 -->
+        <div class="food-item">
+            <img class="food-image" src="https://www.indianhealthyrecipes.com/wp-content/uploads/2023/05/red-sauce-pasta-recipe.jpg" alt="Food 6">
+            <h2>Pasta</h2>
+            <p>Price: $9.99</p>
+            <button onclick="addToCart('Pasta', 9.99)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC5EES5kYkTL7ANrfNV3GgOO_pwqqJeBn9Rg&usqp=CAU" alt="Food 7">
+            <h2>Tacos</h2>
+            <p>Price: $7.49</p>
+            <button onclick="addToCart('Tacos', 7.49)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa_6KkDb48ZJqnR1n3rA8znNJaUolJgUY1-Q&usqp=CAU" alt="Food 8">
+            <h2>Chicken Wings</h2>
+            <p>Price: $10.99</p>
+            <button onclick="addToCart('Chicken Wings', 10.99)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTulwo8oBc0asMwupO8Gn7ReQ0Kny8T6-4pOg&usqp=CAU" alt="Food 9">
+            <h2>Ice Cream</h2>
+            <p>Price: $4.99</p>
+            <button onclick="addToCart('Ice Cream', 4.99)">Add to Cart</button>
+        </div>
+        <div class="food-item">
+            <img class="food-image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQR0Y7DSn4IlBnLJW7ERWpc_txbU-qGlU9vOw&usqp=CAU" alt="Food 10">
+            <h2>chicken Rolls</h2>
+            <p>Price: $11.99</p>
+            <button onclick="addToCart('chicken Rolls', 11.99)">Add to Cart</button>
+        </div>
+    </div>
+    <div class="cart">
+        <h2>Cart</h2>
+        <ul id="cart-items">
+            <!-- Cart items will be displayed here -->
+        </ul>
+        <p>Total: $<span id="total-amount">0.00</span></p>
+        <button onclick="placeOrder()">Place Order</button>
+        <p id="order-status"></p>
+    </div>
+
+    <script>
+        let cart = [];
+        let totalAmount = 0;
+
+        function addToCart(itemName, itemPrice) {
+            cart.push({ name: itemName, price: itemPrice });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cart-items');
+            const totalAmountDisplay = document.getElementById('total-amount');
+
+            // Clear existing cart items
+            cartItems.innerHTML = '';
+
+            // Calculate total amount
+            totalAmount = 0;
+
+            cart.forEach(item => {
+                totalAmount += item.price;
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                cartItems.appendChild(listItem);
+            });
+
+            totalAmountDisplay.textContent = totalAmount.toFixed(2);
+        }
+
+        function placeOrder() {
+            // You can add your order placement logic here.
+            // For demonstration, let's just display a message and the total amount.
+            const orderStatus = document.getElementById('order-status');
+            orderStatus.textContent = 'Your order has been placed successfully!';
+            orderStatus.style.color = 'green';
+            orderStatus.style.fontWeight = 'bold';
+
+            // Display the total amount in the success message
+            const totalAmountMessage = document.createElement('p');
+            totalAmountMessage.textContent = `Total Amount: $${totalAmount.toFixed(2)}`;
+            orderStatus.appendChild(totalAmountMessage);
+
+            // Clear the cart and total amount display after placing the order
+            cart = [];
+            updateCart();
+        }
+    </script>
+</body>
+</html>
